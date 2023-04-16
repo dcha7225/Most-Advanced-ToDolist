@@ -30,7 +30,7 @@ exports.getPostById = async (req, res, next) => {
         res.status(200).json({post});
     } catch (error){
         if (error.errno === 1054) {
-            // Column not found error
+            // Row not found error
             res.status(200).json(null)
           } else {
             console.error(error);

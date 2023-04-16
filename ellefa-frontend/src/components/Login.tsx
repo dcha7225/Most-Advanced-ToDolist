@@ -8,11 +8,10 @@ interface Props {
     update: (items: string[]) => void;
     changePage: (num: number) => void;
     accountStatus: (status: boolean) => void;
+    changeUser: (user: string) => void;
 }
 
-let userExport = "";
-
-function Login({ update, changePage, accountStatus }: Props) {
+function Login({ update, changePage, accountStatus, changeUser }: Props) {
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
 
@@ -28,7 +27,7 @@ function Login({ update, changePage, accountStatus }: Props) {
     };
 
     useEffect(() => {
-        userExport = user;
+        changeUser(user);
     }, [user]);
 
     const handleSubmit = async () => {
@@ -103,4 +102,3 @@ function Login({ update, changePage, accountStatus }: Props) {
 }
 
 export default Login;
-export { userExport };

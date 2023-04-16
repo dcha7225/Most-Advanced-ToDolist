@@ -3,7 +3,7 @@ import List from "./components/List";
 import Button from "./components/Button";
 import TextInput from "./components/TextInput";
 import Signup from "./components/Signup";
-import Login, { userExport as user } from "./components/Login";
+import Login from "./components/Login";
 import { UpdateRow } from "./httpreq";
 import "./App.css";
 
@@ -13,20 +13,10 @@ function App() {
     const [selected, setSelect] = useState(-1);
     const [page, setPage] = useState(0); //0=list, 1=login, 2=signup
     const [accountStatus, setAccountStatus] = useState(false);
+    const [user, setUser] = useState("");
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setText(event.target.value);
-    };
-    const handleItemStateChange = (newItems: string[]) => {
-        setItems(newItems);
-    };
-
-    const handlePageChange = (num: number) => {
-        setPage(num);
-    };
-
-    const handleAccountStatus = (status: boolean) => {
-        setAccountStatus(status);
     };
 
     const handleClickAdd = () => {
@@ -35,12 +25,9 @@ function App() {
             setText("");
         }
     };
+
     const handleClickRemove = () => {
         setItems(items.filter((item, i) => i !== selected));
-    };
-
-    const handleSelected = (index: number) => {
-        setSelect(index);
     };
 
     useEffect(() => {
@@ -48,8 +35,9 @@ function App() {
     }, [items.length]);
 
     useEffect(() => {
-        console.log("Updated items:", items);
         if (accountStatus) {
+            console.log("updated:" + items);
+            console.log(user);
             UpdateRow(user, items);
         }
     }, [items]);
@@ -65,7 +53,7 @@ function App() {
                     <List
                         items={items}
                         heading="items"
-                        onSelect={handleSelected}
+                        onSelect={setSelect}
                         selected={selected}
                     />
                     <label style={{ display: "flex", alignItems: "center" }}>
@@ -85,16 +73,18 @@ function App() {
             )}
             {page == 1 && (
                 <Login
-                    update={handleItemStateChange}
-                    changePage={handlePageChange}
+                    update={setItems}
+                    changePage={setPage}
                     accountStatus={setAccountStatus}
+                    changeUser={setUser}
                 />
             )}
             {page == 2 && (
                 <Signup
-                    update={handleItemStateChange}
-                    changePage={handlePageChange}
+                    update={setItems}
+                    changePage={setPage}
                     accountStatus={setAccountStatus}
+                    changeUser={setUser}
                 />
             )}
         </div>

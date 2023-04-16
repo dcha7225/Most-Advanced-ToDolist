@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, Grid, Paper, Typography, TextField } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutLined";
 import Button from "./Button";
@@ -8,9 +8,10 @@ interface Props {
     update: (items: string[]) => void;
     changePage: (num: number) => void;
     accountStatus: (status: boolean) => void;
+    changeUser: (user: string) => void;
 }
 
-function Signup({ update, changePage, accountStatus }: Props) {
+function Signup({ update, changePage, accountStatus, changeUser }: Props) {
     const [items, setItems] = useState<string[]>([]);
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
@@ -25,6 +26,10 @@ function Signup({ update, changePage, accountStatus }: Props) {
     ) => {
         setPass(event.target.value);
     };
+
+    useEffect(() => {
+        changeUser(user);
+    }, [user]);
 
     const handleSubmit = async () => {
         if (user != "" && pass != "") {
