@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Avatar, Grid, Paper, Typography, TextField } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutLined";
 import Button from "./Button";
-import { getRow } from "../httpreq";
+import { getRow, createRow } from "../httpreq";
 
 interface Props {
     update: (items: string[]) => void;
@@ -10,7 +10,7 @@ interface Props {
     accountStatus: (status: boolean) => void;
 }
 
-function Login({ update, changePage, accountStatus }: Props) {
+function Signup({ update, changePage, accountStatus }: Props) {
     const [items, setItems] = useState<string[]>([]);
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
@@ -30,24 +30,19 @@ function Login({ update, changePage, accountStatus }: Props) {
         if (user != "" && pass != "") {
             let id = user;
             let row = await getRow(id);
-            if (row == null) {
-                alert("no account exists, sign up?");
+            if (row != null) {
+                alert("Account already exists! Try logging in");
             } else {
-                if (pass != row.password) {
-                    alert("wrong password");
-                } else {
-                    alert("successfully logged in!");
-                    setItems(row.items);
-                    update(row.items);
-                    accountStatus(true);
-                    changePage(0);
-                }
+                console.log(createRow(user, pass, items));
+                alert("account created");
+                update([]); //reset list
+                accountStatus(true);
+                changePage(0);
             }
         } else {
             alert("must enter valid username and password!");
         }
     };
-
     const paperStyle = {
         padding: 20,
         height: "70vh",
@@ -70,7 +65,7 @@ function Login({ update, changePage, accountStatus }: Props) {
                         </Avatar>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h5">Log In</Typography>
+                        <Typography variant="h5">Sign Up</Typography>
                     </Grid>
                 </Grid>
                 <TextField
@@ -90,7 +85,7 @@ function Login({ update, changePage, accountStatus }: Props) {
                 />
                 <div style={{ padding: "5px" }}>
                     <Button onClick={handleSubmit}> Submit </Button>
-                    <Button onClick={() => changePage(2)}>SignUp?</Button>
+                    <Button onClick={() => changePage(1)}>Login?</Button>
                     <Button onClick={() => changePage(0)}>Quit</Button>
                 </div>
             </Paper>
@@ -98,4 +93,4 @@ function Login({ update, changePage, accountStatus }: Props) {
     );
 }
 
-export default Login;
+export default Signup;

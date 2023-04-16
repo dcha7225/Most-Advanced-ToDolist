@@ -35,7 +35,7 @@ class Post {
     }
 
     static findById(id) {
-        let sql = `SELECT items FROM posts WHERE id = ${id};`;
+        let sql = `SELECT * FROM posts WHERE username = '${id}';`;
         return db.execute(sql);
     }
 }
