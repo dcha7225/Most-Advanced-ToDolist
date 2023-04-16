@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar, Grid, Paper, Typography, TextField } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutLined";
 import Button from "./Button";
-import { getRow } from "../httpreq";
+import { GetRow } from "../httpreq";
 
 interface Props {
     update: (items: string[]) => void;
@@ -10,8 +10,9 @@ interface Props {
     accountStatus: (status: boolean) => void;
 }
 
+let userExport = "";
+
 function Login({ update, changePage, accountStatus }: Props) {
-    const [items, setItems] = useState<string[]>([]);
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
 
@@ -26,10 +27,14 @@ function Login({ update, changePage, accountStatus }: Props) {
         setPass(event.target.value);
     };
 
+    useEffect(() => {
+        userExport = user;
+    }, [user]);
+
     const handleSubmit = async () => {
         if (user != "" && pass != "") {
             let id = user;
-            let row = await getRow(id);
+            let row = await GetRow(id);
             if (row == null) {
                 alert("no account exists, sign up?");
             } else {
@@ -37,7 +42,6 @@ function Login({ update, changePage, accountStatus }: Props) {
                     alert("wrong password");
                 } else {
                     alert("successfully logged in!");
-                    setItems(row.items);
                     update(row.items);
                     accountStatus(true);
                     changePage(0);
@@ -99,3 +103,4 @@ function Login({ update, changePage, accountStatus }: Props) {
 }
 
 export default Login;
+export { userExport };

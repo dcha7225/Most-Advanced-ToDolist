@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Avatar, Grid, Paper, Typography, TextField } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutLined";
 import Button from "./Button";
-import { getRow, createRow } from "../httpreq";
+import { GetRow, CreateRow } from "../httpreq";
 
 interface Props {
     update: (items: string[]) => void;
@@ -29,11 +29,11 @@ function Signup({ update, changePage, accountStatus }: Props) {
     const handleSubmit = async () => {
         if (user != "" && pass != "") {
             let id = user;
-            let row = await getRow(id);
+            let row = await GetRow(id);
             if (row != null) {
                 alert("Account already exists! Try logging in");
             } else {
-                console.log(createRow(user, pass, items));
+                console.log(CreateRow(user, pass, items));
                 alert("account created");
                 update([]); //reset list
                 accountStatus(true);

@@ -3,7 +3,8 @@ import List from "./components/List";
 import Button from "./components/Button";
 import TextInput from "./components/TextInput";
 import Signup from "./components/Signup";
-import Login from "./components/Login";
+import Login, { userExport as user } from "./components/Login";
+import { UpdateRow } from "./httpreq";
 import "./App.css";
 
 function App() {
@@ -45,6 +46,13 @@ function App() {
     useEffect(() => {
         setSelect(-1);
     }, [items.length]);
+
+    useEffect(() => {
+        console.log("Updated items:", items);
+        if (accountStatus) {
+            UpdateRow(user, items);
+        }
+    }, [items]);
 
     return (
         <div className="container-lg my-4">

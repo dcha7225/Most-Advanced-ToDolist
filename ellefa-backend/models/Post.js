@@ -38,6 +38,11 @@ class Post {
         let sql = `SELECT * FROM posts WHERE username = '${id}';`;
         return db.execute(sql);
     }
+
+    static update(items, username){
+        let sql = `UPDATE posts SET items = '${JSON.stringify(items)}' WHERE username = '${username}';`;
+        return db.execute(sql);
+    }
 }
 
 module.exports = Post;
