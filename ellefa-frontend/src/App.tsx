@@ -48,7 +48,7 @@ function App() {
                 <>
                     <h1>My ToDos</h1>
                     <br />
-                    <h5>Logged In: {accountStatus ? "true" : "false"}</h5>
+                    <h5>Logged In: {accountStatus ? user : "None"}</h5>
                     <br />
                     <List
                         items={items}
