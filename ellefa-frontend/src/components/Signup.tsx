@@ -27,18 +27,14 @@ function Signup({ update, changePage, accountStatus, changeUser }: Props) {
         setPass(event.target.value);
     };
 
-    useEffect(() => {
-        changeUser(user);
-    }, [user]);
-
     const handleSubmit = async () => {
         if (user != "" && pass != "") {
-            let id = user;
-            let row = await GetRow(id);
+            let row = await GetRow(user);
             if (row != null) {
                 alert("Account already exists! Try logging in");
             } else {
                 console.log(CreateRow(user, pass, items));
+                changeUser(user);
                 alert("account created");
                 update([]); //reset list
                 accountStatus(true);

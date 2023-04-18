@@ -26,20 +26,16 @@ function Login({ update, changePage, accountStatus, changeUser }: Props) {
         setPass(event.target.value);
     };
 
-    useEffect(() => {
-        changeUser(user);
-    }, [user]);
-
     const handleSubmit = async () => {
         if (user != "" && pass != "") {
-            let id = user;
-            let row = await GetRow(id);
+            let row = await GetRow(user);
             if (row == null) {
                 alert("no account exists, sign up?");
             } else {
                 if (pass != row.password) {
                     alert("wrong password");
                 } else {
+                    changeUser(user);
                     alert("successfully logged in!");
                     update(row.items);
                     accountStatus(true);

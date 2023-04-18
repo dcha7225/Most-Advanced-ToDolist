@@ -36,8 +36,8 @@ function App() {
 
     useEffect(() => {
         if (accountStatus) {
-            console.log("updated:" + items);
-            console.log(user);
+            //console.log("updated:" + items);
+            //console.log(user);
             UpdateRow(user, items);
         }
     }, [items]);
@@ -46,7 +46,12 @@ function App() {
         <div className="container-lg my-4">
             {page == 0 && (
                 <>
-                    <h1>My ToDos</h1>
+                    <h1>
+                        My Todo List{" "}
+                        {items.length > 0 ? (
+                            <span className="itemLength"> {items.length} </span>
+                        ) : null}
+                    </h1>
                     <br />
                     <h5>Logged In: {accountStatus ? user : "None"}</h5>
                     <br />
