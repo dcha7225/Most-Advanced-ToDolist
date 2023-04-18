@@ -6,14 +6,18 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { UpdateRow } from "./httpreq";
 import "./App.css";
+import Calendar from "./components/Calendar";
+import DatePicker from "react-date-picker";
+import "/node_modules/react-date-picker/src/DatePicker.css";
 
 function App() {
     const [items, setItems] = useState<string[]>([]);
-    const [text, setText] = useState("");
+    let [text, setText] = useState(""); //use let to allow us to assign text synchronosouly
     const [selected, setSelect] = useState(-1);
-    const [page, setPage] = useState(0); //0=list, 1=login, 2=signup
+    const [page, setPage] = useState(0); //0=list, 1=login, 2=signup 3=calendar
     const [accountStatus, setAccountStatus] = useState(false);
     const [user, setUser] = useState("");
+    const [selectedDate, setSelectedDate] = useState<any>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setText(event.target.value);
@@ -21,11 +25,14 @@ function App() {
 
     const handleClickAdd = () => {
         if (text != "") {
+            if (selectedDate != null) {
+                text += " " + selectedDate.toISOString().replace(/T.*$/, ""); //append date in yyyy-mm-dd format
+                console.log(text);
+            }
             setItems([...items, text]);
             setText("");
         }
     };
-
     const handleClickRemove = () => {
         setItems(items.filter((item, i) => i !== selected));
     };
@@ -36,8 +43,6 @@ function App() {
 
     useEffect(() => {
         if (accountStatus) {
-            //console.log("updated:" + items);
-            //console.log(user);
             UpdateRow(user, items);
         }
     }, [items]);
@@ -68,8 +73,18 @@ function App() {
                     <br />
                     <div style={{ padding: "5px" }}>
                         <Button onClick={handleClickAdd}> Submit </Button>
+
+                        <DatePicker
+                            value={selectedDate}
+                            onChange={(date) => setSelectedDate(date)}
+                            format="yyyy-MM-dd"
+                        />
+
                         <Button onClick={handleClickRemove}>
                             Delete Selected
+                        </Button>
+                        <Button onClick={() => setPage(3)}>
+                            Show Calender
                         </Button>
                         {!accountStatus && (
                             <Button onClick={() => setPage(1)}>Login</Button>
@@ -106,6 +121,12 @@ function App() {
                     accountStatus={setAccountStatus}
                     changeUser={setUser}
                 />
+            )}
+            {page == 3 && (
+                <>
+                    <Calendar items={items} />
+                    <Button onClick={() => setPage(0)}>Close Calendar</Button>
+                </>
             )}
         </div>
     );
