@@ -71,8 +71,23 @@ function App() {
                         <Button onClick={handleClickRemove}>
                             Delete Selected
                         </Button>
-                        <Button onClick={() => setPage(1)}>Login</Button>
-                        <Button onClick={() => setPage(2)}>Signup</Button>
+                        {!accountStatus && (
+                            <Button onClick={() => setPage(1)}>Login</Button>
+                        )}
+                        {!accountStatus && (
+                            <Button onClick={() => setPage(2)}>Signup</Button>
+                        )}
+                        {accountStatus && (
+                            <Button
+                                onClick={() => {
+                                    setUser("");
+                                    setItems([]);
+                                    setAccountStatus(false);
+                                }}
+                            >
+                                Logout
+                            </Button>
+                        )}
                     </div>
                 </>
             )}
