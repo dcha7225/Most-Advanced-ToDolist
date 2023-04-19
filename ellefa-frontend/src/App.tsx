@@ -8,7 +8,8 @@ import { UpdateRow } from "./httpreq";
 import "./App.css";
 import Calendar from "./components/Calendar";
 import DatePicker from "react-date-picker";
-import "/node_modules/react-date-picker/src/DatePicker.css";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 
 function App() {
     const [items, setItems] = useState<string[]>([]);
@@ -31,6 +32,7 @@ function App() {
             }
             setItems([...items, text]);
             setText("");
+            setSelectedDate(null);
         }
     };
     const handleClickRemove = () => {
@@ -73,13 +75,11 @@ function App() {
                     <br />
                     <div style={{ padding: "5px" }}>
                         <Button onClick={handleClickAdd}> Submit </Button>
-
                         <DatePicker
                             value={selectedDate}
-                            onChange={(date) => setSelectedDate(date)}
+                            onChange={setSelectedDate}
                             format="yyyy-MM-dd"
                         />
-
                         <Button onClick={handleClickRemove}>
                             Delete Selected
                         </Button>
