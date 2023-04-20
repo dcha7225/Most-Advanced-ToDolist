@@ -3,8 +3,8 @@ const postControllers = require("../controllers/postControllers");
 const router = express.Router();
 
 
-router.route("/").get(postControllers.getAllPosts).post(postControllers.createNewPosts).put(postControllers.updatePostById);
+router.route("/").post(postControllers.createNewPosts).put(postControllers.updatePostById);
 
-router.route("/:id").get(postControllers.getPostById).delete(postControllers.deletePostById);
+router.route("/:id").get(postControllers.getPostById)
 
 module.exports = router;

@@ -1,15 +1,5 @@
 const Post = require("../models/Post");
 
-exports.getAllPosts = async (req, res, next) => {
-    try {
-        const [posts,_] = await Post.findAll();
-        res.status(200).json({posts});
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-};
-
 exports.createNewPosts = async (req, res, next) => {
    try{
         let {username, password, items} = req.body;
@@ -38,17 +28,6 @@ exports.getPostById = async (req, res, next) => {
           }
     }
 };
-
-exports.deletePostById = async (req, res, next) => {
-    try {
-      let postId = req.params.id;
-      await Post.delete(postId);
-      res.status(200).json({ message: `Post with id ${postId} deleted successfully` });
-    } catch (error) {
-      console.error(error);
-      next(error);
-    }
-  };
   
 exports.updatePostById = async (req, res, next) => {
   try{

@@ -21,18 +21,6 @@ class Post {
         `;
         return db.execute(sql);
     }
-    static delete(id) {
-        let sql = `
-        DELETE FROM posts
-        WHERE id = ${id};
-        `;
-        return db.execute(sql);
-    }
-
-    static findAll() {
-        let sql = "SELECT items FROM posts;";
-        return db.execute(sql);
-    }
 
     static findById(id) {
         let sql = `SELECT * FROM posts WHERE username = '${id}';`;
