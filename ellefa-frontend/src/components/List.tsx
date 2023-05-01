@@ -4,7 +4,7 @@ interface Props {
     items: string[];
     heading: string;
     selected: number;
-    onSelect: (index: number) => void;
+    onSelect: (index: number) => void; //pass handler as prop since items is local to app.tsx
 }
 
 function List({ items, heading, onSelect, selected }: Props) {
