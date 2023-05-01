@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Avatar, Grid, Paper, Typography, TextField } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutLined";
 import Button from "./Button";
