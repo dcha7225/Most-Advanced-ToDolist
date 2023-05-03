@@ -28,7 +28,6 @@ function App() {
         if (text != "") {
             if (selectedDate != null) {
                 text += " " + selectedDate.toISOString().replace(/T.*$/, ""); //append date in yyyy-mm-dd format
-                console.log(text);
             }
             setItems([...items, text]);
             setText("");

@@ -3,7 +3,7 @@ import axios from "axios";
 export async function GetRow(id: string) {
     try {
         const response = await axios.get(`http://localhost:3000/get/${id}`);
-        return JSON.parse(JSON.stringify(response.data.get))[0];
+        return response.data.get[0];
         //parse through json object
     } catch (error) {
         alert(error);
