@@ -1,11 +1,9 @@
-const Post = require("../models/Post");
+const Post = require("../models/post");
 
 exports.createNewPosts = async (req, res, next) => {
    try{
         let {username, password, items} = req.body;
-
-        let post = new Post(username, password, items);
-        await post.save(); 
+        await Post.save(username, password, items); 
         res.status(201).json({message: "Post Created"});
    } catch (error){
         console.log(error);
@@ -13,30 +11,15 @@ exports.createNewPosts = async (req, res, next) => {
    }
 };
 
-exports.getPostById = async (req, res, next) => {
-    try{
-        let postId = req.params.id;
-        let [post,_] = await Post.findById(postId);
-        res.status(200).json({post});
-    } catch (error){
-        if (error.errno === 1054) {
-            // Row not found error
-            res.status(200).json(null)
-          } else {
-            console.error(error);
-            next(error);
-          }
-    }
-};
-  
+
 exports.updatePostById = async (req, res, next) => {
   try{
-    let {username, items} = req.body;
-    await Post.update(items, username);
-    res.status(200).json({message: "Post Updated"});
+      let {username, items} = req.body;
+      await Post.update(items, username);
+      res.status(200).json({message: "Post Updated"});
   } catch (error){
-    console.log(error);
-    next(error);
+      console.log(error);
+      next(error);
   }
   };
   
