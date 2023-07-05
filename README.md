@@ -1,5 +1,5 @@
 # Most-Advanced-ToDolist
-Simple to-do list web application with calendar feature.
+Advanced to-do list web application with user authentication and calendar feature.
  - FrontEnd: React & TypeScript 
  - BackEnd: ExpressJS 
  - Database: MySQL
